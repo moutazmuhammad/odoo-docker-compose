@@ -322,8 +322,8 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./conf:/etc/nginx/conf.d
-      - ./vhost:/etc/nginx/vhost.d
+      - ./config:/etc/nginx/conf.d
+      - ./vhost.d:/etc/nginx/vhost.d
       - ./html:/usr/share/nginx/html
       - ./certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
