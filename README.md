@@ -254,7 +254,23 @@ docker-compose down
 
 
 
+## Clean Old Images
+```sh
+#!/bin/bash
 
+# Get a list of image IDs for images with <none> tag
+image_ids=$(docker images -f "dangling=true" -q)
+
+# Check if there are any images to remove
+if [ -n "$image_ids" ]; then
+  # Remove each image by its ID
+  for image_id in $image_ids; do
+    docker rmi $image_id
+  done
+else
+  echo "No images with <none> tag found."
+fi
+```
 
 
 # Nginx - SSL Automation - Docker
