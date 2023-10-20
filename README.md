@@ -226,7 +226,7 @@ RUN apt-get update && apt-get install -y \
     libgle3 \
     python-dev \
     python3-dev \
-    python-cairo
+    python3-wheel
 RUN usermod -u 1000 odoo && \
     groupmod -g 1000 odoo && \
     mkdir /var/lib/odoo/.local && \
