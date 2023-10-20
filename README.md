@@ -294,16 +294,16 @@ nginx/
     |
     ├── html
     |
-    ├── conf/
+    ├── config/
     |
-    ├── log/
+    ├── logs/
     |
-    └── vhost/
+    └── vhost.d/
 ```
 ```sh
 mkdir NGINX
 cd NGINX
-mkdir acme certbot certbot/www certbot/conf certs conf html log vhost
+mkdir acme certbot certbot/www certbot/conf certs config html logs vhost.d
 ```
 
 
