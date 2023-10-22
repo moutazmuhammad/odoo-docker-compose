@@ -329,7 +329,7 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-      - ./log:/var/log/nginx
+      - ./logs:/var/log/nginx
     networks:
       - exp-network
 
