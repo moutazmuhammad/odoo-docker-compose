@@ -141,15 +141,15 @@ Add the following text to the file:
 ```yaml
 version: "3"
 services:
-  {project}-{stage}:
+  {project}:
     build: .
-    container_name: {project}-{stage}
+    container_name: {project}
     depends_on:
       - db
     restart: always
     environment:
-      - VIRTUAL_HOST=example.yourdomain.com
-      - LETSENCRYPT_HOST=example.yourdomain.com
+      - VIRTUAL_HOST={project}.kodeflow.store
+      - LETSENCRYPT_HOST={project}.kodeflow.store
       - VIRTUAL_PORT=8069
     volumes:
       - ./odoo:/var/lib/odoo
@@ -160,7 +160,7 @@ services:
       - exp-network
   db:
     image: postgres:12
-    container_name: {project}-{stage}-db
+    container_name: {project}-db
     restart: always
     command: postgres -c "max_connections=300"
     environment:
