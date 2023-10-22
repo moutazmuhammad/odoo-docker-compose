@@ -148,8 +148,8 @@ services:
       - db
     restart: always
     environment:
-      - VIRTUAL_HOST=www.yourdomain.com,yourdomain.com
-      - LETSENCRYPT_HOST=www.yourdomain.com,yourdomain.com
+      - VIRTUAL_HOST=example.yourdomain.com
+      - LETSENCRYPT_HOST=example.yourdomain.com
       - VIRTUAL_PORT=8069
     volumes:
       - ./odoo:/var/lib/odoo
