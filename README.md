@@ -303,7 +303,7 @@ nginx/
 ```sh
 mkdir NGINX
 cd NGINX
-mkdir acme certbot certbot/www certbot/conf certs config html logs vhost.d
+mkdir acme certbot certbot/www certbot/conf cert conf html log vhost
 ```
 
 
@@ -322,14 +322,14 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./config:/etc/nginx/conf.d
-      - ./vhost.d:/etc/nginx/vhost.d
+      - ./conf:/etc/nginx/conf.d
+      - ./vhost:/etc/nginx/vhost.d
       - ./html:/usr/share/nginx/html
       - ./certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-      - ./logs:/var/log/nginx
+      - ./log:/var/log/nginx
     networks:
       - exp-network
 
