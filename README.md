@@ -344,7 +344,7 @@ services:
       - ./acme:/etc/acme.sh
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
-      - DEFAULT_EMAIL=m.muhammad@exp-sa.com
+      - DEFAULT_EMAIL=moutazmuhamad@gmail.com
       - NGINX_DOCKER_GEN_CONTAINER=nginx
     networks:
       - exp-network
