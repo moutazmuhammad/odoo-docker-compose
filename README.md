@@ -201,32 +201,8 @@ vim Dockerfile
 
 Add the following text to the file odoo:14.0:
 ```docker
-FROM odoo:14.0
+FROM moutazmuhammad/odoo:14.0
 USER root
-RUN apt-get update && apt-get install -y \
-    libcairo2-dev \
-    pkg-config \
-    build-essential \
-    autoconf \
-    libtool \
-    pkg-config \
-    python-opengl \
-    idle-python2.7 \
-    qt4-dev-tools \
-    qt4-designer \
-    libqtgui4 \
-    libqtcore4 \
-    libqt4-xml \
-    libqt4-test \
-    libqt4-script \
-    libqt4-network \
-    libqt4-dbus \
-    python-qt4 \
-    python-qt4-gl \
-    libgle3 \
-    python-dev \
-    python3-dev \
-    python3-wheel
 RUN usermod -u 1000 odoo && \
     groupmod -g 1000 odoo && \
     mkdir /var/lib/odoo/.local && \
