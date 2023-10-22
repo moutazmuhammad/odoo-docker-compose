@@ -82,8 +82,8 @@ sudo usermod -aG docker $(whoami)
 Let's create a directory structure for a separate project, give it a name, for example, "{project}":
 ```sh
 
-mkdir {project}/{stage}
-cd {project}/{stage}
+mkdir {project}
+cd {project}
 
 mkdir config addons odoo logs postgresql
 touch addons/requirements.txt
@@ -236,7 +236,7 @@ USER odoo
 
 Let's try to run the container:
 ```sh
-cd {project}/{stage}
+cd {project}
 ```
 ```sh
 docker-compose up -d
@@ -721,7 +721,7 @@ sudo nginx -t && sudo nginx -s reload
 ### Adding third-party modules
 To connect third-party modules, go to the "addons" directory and clone the required repository:
 ```sh
-cd {project}/{stage}/addons
+cd {project}/addons
 ```
 
 Copy the standard Odoo themes for the website:
@@ -730,9 +730,9 @@ git clone -b 16.0 --single-branch --depth=1 https://github.com/odoo/design-theme
 ```
 
 
-Modules with themes will be added to the {project}/{stage}/addons/design-themes directory, then you need to add this path to the Odoo configuration file to the "addons_path" parameter as follows:
+Modules with themes will be added to the {project}/addons/design-themes directory, then you need to add this path to the Odoo configuration file to the "addons_path" parameter as follows:
 ```sh
-vim {project}/{stage}/config/odoo.conf
+vim {project}/config/odoo.conf
 ```
 
 Let's add the path to the modules:
@@ -742,12 +742,12 @@ addons_path=/mnt/extra-addons/design-themes
 
 Let's restart the docker container with commands:
 ```sh
-cd {project}/{stage} && docker-compose down && docker-compose up -d
+cd {project} && docker-compose down && docker-compose up -d
 ```
 
 In this way, we will add the other repositories and modules we need, for example, the backup module:
 ```sh
-cd {project}/{stage}/addons && git clone -b 16.0 --single-branch --depth=1 https://github.com/Yenthe666/auto_backup.git
+cd {project}/addons && git clone -b 16.0 --single-branch --depth=1 https://github.com/Yenthe666/auto_backup.git
 ```
 
 Let's add the path to the modules in the configuration file:
