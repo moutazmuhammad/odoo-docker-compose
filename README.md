@@ -339,7 +339,7 @@ vim docker-compose.yml
 version: '3'
 services:
   nginx-proxy:
-    image: nginxproxy/nginx-proxy:alpine
+    image: moutazmuhammad/nginx-proxy:v1
     container_name: nginx-proxy
     restart: always
     ports:
