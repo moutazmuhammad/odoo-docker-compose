@@ -313,6 +313,64 @@ fi
 odo
 ```
 
+
+## Github action file
+```yaml
+
+---
+name: zuhair docker-compose deploy
+
+on:
+  push:
+    branches:
+      - master
+      - preprod
+      - test
+  workflow_dispatch: 
+
+env:
+  TEST_PATH: /home/odoo/ZUHAIR/ZUHAIR-DEV
+  PREPROD_PATH: /home/odoo/ZUHAIR/ZUHAIR-PREPROD
+  MASTER_PATH: /home/odoo/ZUHAIR/ZUHAIR-PROD
+
+jobs:
+  deploy:
+    runs-on: zuhair-docker-runner 
+    steps:
+      - name: Checkout code and set working directory
+        run: |
+          if [ ${{ github.ref == 'refs/heads/master' }} ]; then
+            cd $MASTER_PATH/addons
+            pwd
+            git pull origin master
+            cd $MASTER_PATH
+            pwd
+          elif [ ${{ github.ref == 'refs/heads/preprod' }} ]; then
+            cd $PREPROD_PATH/addons
+            pwd
+            git pull origin preprod
+            cd $PREPROD_PATH
+            pwd
+          elif [ ${{ github.ref == 'refs/heads/test' }} ]; then
+            cd $TEST_PATH/addons
+            pwd
+            git pull origin test
+            cd $TEST_PATH
+            pwd
+          fi
+          
+          echo "Initialize the configuration file"
+          chmod +x initialize_odoo_conf.sh clean-image.sh
+          ./initialize_odoo_conf.sh
+
+          echo "Restart Docker Compose"
+          docker-compose down && docker-compose up -d --build
+
+          echo "Clean Old Images"
+          ./clean-image.sh
+
+```
+
 # Nginx - SSL Automation - Docker
 
 ### Docker-Comopse
