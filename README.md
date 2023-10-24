@@ -87,6 +87,7 @@ cd {project}
 
 mkdir config addons odoo logs postgresql
 touch addons/requirements.txt
+touch addons/addons.conf
 
 ```
 
@@ -272,6 +273,45 @@ else
 fi
 ```
 
+```
+vim initialize_odoo_conf.sh
+```
+```sh
+#!/bin/bash
+
+# Input file path
+file_path="/home/odoo/ZUHAIR/ZUHAIR-PROD/addons/addons.conf"
+
+# Output string
+addons_path=""
+
+# Read each line in the file and append to the addons_path variable
+while IFS= read -r line; do
+  addons_path="$addons_path$line,"
+done <"$file_path"
+
+# Remove the last comma from the addons_path
+addons_path=${addons_path%?}
+
+# Result of new addons path
+
+modified_line=$(echo "$addons_path" | sed 's/,*$//')
+new_addons="addons_path=$modified_line"
+
+echo $new_addons
+# odoo.conf path
+file_path="/home/odoo/ZUHAIR/ZUHAIR-PROD/config/odoo.conf"
+
+# Check if the odoo.conf file exists
+if [ -f "$file_path" ]; then
+    # Use sed to replace the addons_path line
+    sed -i "s|^addons_path=.*$|$new_addons|g" "$file_path"
+    echo "Addons path line has been replaced successfully."
+else
+    echo "File not found. Please provide the correct path to the file."
+fi
+odo
+```
 
 # Nginx - SSL Automation - Docker
 
