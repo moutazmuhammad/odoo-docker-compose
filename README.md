@@ -257,6 +257,9 @@ docker-compose down
 
 ## Clean Old Images
 ```sh
+vim clean-image.sh
+```
+```sh
 #!/bin/bash
 
 # Get a list of image IDs for images with <none> tag
@@ -311,8 +314,9 @@ else
     echo "File not found. Please provide the correct path to the file."
 fi
 ```
-
-
+```sh
+chmod +x clean-image.sh initialize_odoo_conf.sh
+```
 ## Github action file
 ```yaml
 
