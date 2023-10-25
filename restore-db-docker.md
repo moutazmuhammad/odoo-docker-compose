@@ -82,7 +82,7 @@ docker exec -it  <container-name> psql -U <dataBaseUserName> <dataBaseName>
 ```
 
 ```sh
-UPDATE res_users SET password='new_pass' WHERE id=2;
+UPDATE res_users SET password='admin' WHERE id=2;
 ```
 
 
