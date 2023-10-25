@@ -310,7 +310,6 @@ if [ -f "$file_path" ]; then
 else
     echo "File not found. Please provide the correct path to the file."
 fi
-odo
 ```
 
 
