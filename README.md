@@ -158,7 +158,7 @@ services:
       - VIRTUAL_PORT=8069
       - HOST={project}-db
       - USER=odoo
-      - PASSWORD=myodoo
+      - PASSWORD=odoo
     volumes:
       - ./odoo:/var/lib/odoo
       - ./config:/etc/odoo
