@@ -150,7 +150,7 @@ services:
       - "8069:8069"
       - "8072:8072"
     depends_on:
-      - db
+      - {project}-db
     restart: always
     environment:
       - VIRTUAL_HOST={project}.kodeflow.store
