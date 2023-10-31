@@ -153,6 +153,9 @@ services:
       - VIRTUAL_HOST={project}.kodeflow.store
       - LETSENCRYPT_HOST={project}.kodeflow.store
       - VIRTUAL_PORT=8069
+      - HOST={project}-db
+      - USER=odoo
+      - PASSWORD=odoo
     volumes:
       - ./odoo:/var/lib/odoo
       - ./config:/etc/odoo
@@ -160,7 +163,7 @@ services:
       - ./logs:/mnt/logs
     networks:
       - exp-network
-  db:
+  {project}-db:
     image: postgres:12
     container_name: {project}-db
     restart: always
