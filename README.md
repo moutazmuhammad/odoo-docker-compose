@@ -327,7 +327,6 @@ chmod +x clean-image.sh initialize_odoo_conf.sh
 ## Github action file
 ```yaml
 
----
 name: zuhair docker-compose deploy
 
 on:
@@ -339,7 +338,7 @@ on:
   workflow_dispatch: 
 
 env:
-  TEST_PATH: /home/odoo/ZUHAIR/{project}
+  TEST_PATH: /home/odoo/ZUHAIR/ZUHAIR-DEV
   PREPROD_PATH: /home/odoo/ZUHAIR/ZUHAIR-PREPROD
   MASTER_PATH: /home/odoo/ZUHAIR/ZUHAIR-PROD
 
@@ -349,25 +348,21 @@ jobs:
     steps:
       - name: Checkout code and set working directory
         run: |
-          if [ ${{ github.ref == 'refs/heads/master' }} ]; then
+          if [ "${{ github.ref }}" == 'refs/heads/master' ]; then
             cd $MASTER_PATH/addons
-            pwd
             git pull origin master
             cd $MASTER_PATH
-            pwd
-          elif [ ${{ github.ref == 'refs/heads/preprod' }} ]; then
+          elif [ "${{ github.ref }}" == 'refs/heads/preprod' ]; then
             cd $PREPROD_PATH/addons
-            pwd
             git pull origin preprod
             cd $PREPROD_PATH
-            pwd
-          elif [ ${{ github.ref == 'refs/heads/test' }} ]; then
+          elif [ "${{ github.ref }}" == 'refs/heads/test' ]; then
             cd $TEST_PATH/addons
-            pwd
             git pull origin test
             cd $TEST_PATH
-            pwd
           fi
+
+          pwd
           
           echo "Initialize the configuration file"
           chmod +x initialize_odoo_conf.sh clean-image.sh
