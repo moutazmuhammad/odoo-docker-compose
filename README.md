@@ -109,6 +109,7 @@ log_db_level = warning
 log_handler = :INFO
 log_level = debug_rpc
 logfile = /mnt/logs/odoo-server.log
+longpolling_port = 8072
 logrotate = 3
 limit_memory_hard = 2415919104
 limit_memory_soft = 2013265920
