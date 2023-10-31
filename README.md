@@ -146,6 +146,9 @@ services:
   {project}:
     build: .
     container_name: {project}
+    ports:
+      - "8069:8069"
+      - "8072:8072"
     depends_on:
       - db
     restart: always
@@ -155,7 +158,7 @@ services:
       - VIRTUAL_PORT=8069
       - HOST={project}-db
       - USER=odoo
-      - PASSWORD=odoo
+      - PASSWORD=myodoo
     volumes:
       - ./odoo:/var/lib/odoo
       - ./config:/etc/odoo
@@ -336,7 +339,7 @@ on:
   workflow_dispatch: 
 
 env:
-  TEST_PATH: /home/odoo/ZUHAIR/ZUHAIR-DEV
+  TEST_PATH: /home/odoo/ZUHAIR/{project}
   PREPROD_PATH: /home/odoo/ZUHAIR/ZUHAIR-PREPROD
   MASTER_PATH: /home/odoo/ZUHAIR/ZUHAIR-PROD
 
