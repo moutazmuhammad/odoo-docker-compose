@@ -361,6 +361,9 @@ else
     echo "File not found. Please provide the correct path to the file."
 fi
 
+# HOW TO CALL THIS SCRIPT
+# ./initialize_odoo_conf.sh "odoo.conf" "conf.conf" "/opt/odoo14/ZUHAIR-ADDONS/zuhair_test/" "/opt/odoo14/ZUHAIR-ADDONS/odoo-14.0/addons,/opt/odoo14/ZUHAIR-ADDONS/odoo-14.0/odoo/addons"
+
 ```
 
 
