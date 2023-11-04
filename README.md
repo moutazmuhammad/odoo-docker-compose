@@ -321,6 +321,49 @@ else
     echo "File not found. Please provide the correct path to the file."
 fi
 ```
+
+```sh
+#!/bin/bash
+
+# Check if the correct number of arguments is provided
+if [ "$#" -ne 4 ]; then
+    echo "Usage: $0 <input_file> <output_file> <custom_path> <main_addons>"
+    exit 1
+fi
+
+# Assign the provided arguments to variables
+INPUT_FILE=$1 # Input file path
+OUTPUT_FILE=$2 # Output file path
+CUSTOM_PATH=$3 # Custom path to be appended to each line from the input file
+MAIN_ADDONS=$4 # odoo addons path
+
+# Output addons
+ADDONS_PATH=""
+
+# Read each line in the file and append to the ADDONS_PATH variable
+while IFS= read -r line || [[ -n "$line" ]]; do
+    if [ -n "$line" ]; then
+        ADDONS_PATH="$ADDONS_PATH$CUSTOM_PATH$line," # Appending the custom path and line to ADDONS_PATH
+    fi
+done <"$INPUT_FILE"
+
+# Remove the last comma from the addons_path
+ADDONS_PATH="addons_path = $4,${ADDONS_PATH%?}"
+
+echo "** [INFO] $ADDONS_PATH" # Output the updated addons path
+
+# Check if the OUTPUT_FILE file exists
+if [ -f "$OUTPUT_FILE" ]; then
+    # Use sed to replace the addons_path line in the output file
+    sed -i "s|^addons_path = .*$|$ADDONS_PATH|g" "$OUTPUT_FILE"
+    echo "** [INFO] Addons path line has been replaced successfully."
+else
+    echo "File not found. Please provide the correct path to the file."
+fi
+
+```
+
+
 ```sh
 chmod +x clean-image.sh initialize_odoo_conf.sh
 ```
