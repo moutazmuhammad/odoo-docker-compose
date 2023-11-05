@@ -332,10 +332,10 @@ if [ "$#" -ne 4 ]; then
 fi
 
 # Assign the provided arguments to variables
-INPUT_FILE=$1 # Input file path
-OUTPUT_FILE=$2 # Output file path
-CUSTOM_PATH=$3 # Custom path to be appended to each line from the input file
-MAIN_ADDONS=$4 # odoo addons path
+INPUT_FILE=$1 # Input file path ex: /opt/odoo11/{project}-ADDONS/{project}_{stage}/odoo.conf
+OUTPUT_FILE=$2 # Output file path ex: /etc/odoo.conf
+CUSTOM_PATH=$3 # Custom path to be appended to each line from the input file ex: /opt/odoo11/{project}-ADDONS/zuhair_{stage}
+MAIN_ADDONS=$4 # odoo addons path ex: /opt/odoo11/{project}-ADDONS/odoo-11.0/addons,/opt/odoo11/{project}-ADDONS/odoo-11.0/odoo/addons
 
 # Output addons
 ADDONS_PATH=""
@@ -343,7 +343,7 @@ ADDONS_PATH=""
 # Read each line in the file and append to the ADDONS_PATH variable
 while IFS= read -r line || [[ -n "$line" ]]; do
     if [ -n "$line" ]; then
-        ADDONS_PATH="$ADDONS_PATH$CUSTOM_PATH$line," # Appending the custom path and line to ADDONS_PATH
+        ADDONS_PATH="$ADDONS_PATH$CUSTOM_PATH/$line," # Appending the custom path and line to ADDONS_PATH
     fi
 done <"$INPUT_FILE"
 
@@ -360,9 +360,6 @@ if [ -f "$OUTPUT_FILE" ]; then
 else
     echo "File not found. Please provide the correct path to the file."
 fi
-
-# HOW TO CALL THIS SCRIPT
-# ./initialize_odoo_conf.sh "odoo.conf" "conf.conf" "/opt/odoo14/ZUHAIR-ADDONS/zuhair_test/" "/opt/odoo14/ZUHAIR-ADDONS/odoo-14.0/addons,/opt/odoo14/ZUHAIR-ADDONS/odoo-14.0/odoo/addons"
 
 ```
 
