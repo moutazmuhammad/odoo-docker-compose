@@ -2,10 +2,10 @@
 
 ## Create Python script
 
-```
+```sh
 vim projects-db.py
 ```
-```
+```py
 import subprocess
 
 # Define the projects with their respective information
@@ -40,11 +40,11 @@ for project_name, databases in projects.items():
 
 
 ## Create Bash script
-```
+```sh
 vim backup.sh
 ```
 
-```
+```sh
 #!/bin/bash
 
 # Define DigitalOcean Spaces credentials
@@ -78,12 +78,12 @@ s3cmd put "${DB_NAME}.zip" "s3://${DO_BUCKET_NAME}/${FOLDER_NAME}/" || { echo "U
 rm -rf "${DB_NAME}.zip"
 
 ```
-```
+```sh
 chmod +x backup.sh
 ```
 
 ## Create Cron Job
-```
+```sh
 crontab -e
 ```
 ```
