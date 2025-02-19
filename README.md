@@ -290,7 +290,7 @@ vim initialize_odoo_conf.sh
 #!/bin/bash
 
 # Input file path
-file_path="/home/odoo/ZUHAIR/ZUHAIR-PROD/addons/addons.conf"
+file_path="/home/odoo/PROJECT_NAME/PROJECT_NAME-PROD/addons/addons.conf"
 
 # Output string
 addons_path=""
@@ -310,7 +310,7 @@ new_addons="addons_path=$modified_line"
 
 echo $new_addons
 # odoo.conf path
-file_path="/home/odoo/ZUHAIR/ZUHAIR-PROD/config/odoo.conf"
+file_path="/home/odoo/PROJECT_NAME/PROJECT_NAME-PROD/config/odoo.conf"
 
 # Check if the odoo.conf file exists
 if [ -f "$file_path" ]; then
@@ -334,7 +334,7 @@ fi
 # Assign the provided arguments to variables
 INPUT_FILE=$1 # Input file path ex: /opt/odoo11/{project}-ADDONS/{project}_{stage}/odoo.conf
 OUTPUT_FILE=$2 # Output file path ex: /etc/odoo.conf
-CUSTOM_PATH=$3 # Custom path to be appended to each line from the input file ex: /opt/odoo11/{project}-ADDONS/zuhair_{stage}
+CUSTOM_PATH=$3 # Custom path to be appended to each line from the input file ex: /opt/odoo11/{project}-ADDONS/PROJECT_NAME_{stage}
 MAIN_ADDONS=$4 # odoo addons path ex: /opt/odoo11/{project}-ADDONS/odoo-11.0/addons,/opt/odoo11/{project}-ADDONS/odoo-11.0/odoo/addons
 
 # Output addons
@@ -370,7 +370,7 @@ chmod +x clean-image.sh initialize_odoo_conf.sh
 ## Github action file
 ```yaml
 
-name: zuhair docker-compose deploy
+name: PROJECT_NAME docker-compose deploy
 
 on:
   push:
@@ -381,13 +381,13 @@ on:
   workflow_dispatch: 
 
 env:
-  TEST_PATH: /home/odoo/ZUHAIR/ZUHAIR-DEV
-  PREPROD_PATH: /home/odoo/ZUHAIR/ZUHAIR-PREPROD
-  MASTER_PATH: /home/odoo/ZUHAIR/ZUHAIR-PROD
+  TEST_PATH: /home/odoo/PROJECT_NAME/PROJECT_NAME-DEV
+  PREPROD_PATH: /home/odoo/PROJECT_NAME/PROJECT_NAME-PREPROD
+  MASTER_PATH: /home/odoo/PROJECT_NAME/PROJECT_NAME-PROD
 
 jobs:
   deploy:
-    runs-on: zuhair-docker-runner 
+    runs-on: PROJECT_NAME-docker-runner 
     steps:
       - name: Checkout code and set working directory
         run: |
