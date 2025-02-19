@@ -132,7 +132,7 @@ Paste the generated password into the configuration file in the admin_passwd par
 ## 4- Creating a "docker-compose" configuration file:
 
 ```
-docker network create exp-network
+docker network create project_name-network
 ```
 
 Let's create the "docker-compose.yml" configuration file with the command:
@@ -165,7 +165,7 @@ services:
       - ./addons:/mnt/extra-addons
       - ./logs:/mnt/logs
     networks:
-      - exp-network
+      - project_name-network
   {project}-db:
     image: postgres:12
     container_name: {project}-db
@@ -181,9 +181,9 @@ services:
       options:
         max-size: 50m
     networks:
-      - exp-network
+      - project_name-network
 networks:
-   exp-network:
+   project_name-network:
      external: true
 ```
 
@@ -477,7 +477,7 @@ services:
       - ./certbot/www:/var/www/certbot
       - ./log:/var/log/nginx
     networks:
-      - exp-network
+      - project_name-network
 
   # acme companion
   acme-companion:
@@ -493,7 +493,7 @@ services:
       - DEFAULT_EMAIL=moutazmuhamad@gmail.com
       - NGINX_DOCKER_GEN_CONTAINER=nginx
     networks:
-      - exp-network
+      - project_name-network
   certbot:
     image: certbot/certbot
     container_name: certbot
@@ -502,9 +502,9 @@ services:
       - ./certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     networks:
-      - exp-network
+      - project_name-network
 networks:
-  exp-network:
+  project_name-network:
     external: true
 ```
 
