@@ -4,7 +4,7 @@
 # Author: Moutaz Muhammad <moutazmuhamad@gmail.com>
 # Modified to support Ubuntu 16, 20, 22, 24, CentOS, and Red Hat
 
-# curl -s https://raw.githubusercontent.com/moutazmuhammad/odoo-docker-compose/main/Dockerfile/setup.sh | bash
+# curl -s https://raw.githubusercontent.com/moutazmuhammad/odoo-docker-compose/main/Dockerfile/setup.sh | sudo bash
 #################################################################################################################
 set -e
 
