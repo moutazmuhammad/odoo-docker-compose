@@ -209,6 +209,41 @@ start_containers() {
     done
 }
 
+# Function to add restart commands to /usr/local/bin
+add_restart_commands() {
+    echo "Adding restart commands..."
+
+    sudo tee /usr/local/bin/restart_odoo11 > /dev/null << 'EOF'
+#!/bin/bash
+docker restart odoo11_odoo11_1 db11_odoo11_1
+EOF
+
+    sudo tee /usr/local/bin/restart_odoo14 > /dev/null << 'EOF'
+#!/bin/bash
+docker restart odoo14_odoo14_1 db14_odoo14_1
+EOF
+
+    sudo chmod +x /usr/local/bin/restart_odoo11
+    sudo chmod +x /usr/local/bin/restart_odoo14
+
+    echo "Restart command scripts created in /usr/local/bin"
+}
+
+# Function to update bashrc with alias commands
+add_bashrc_aliases() {
+    echo "Adding aliases to ~/.bashrc..."
+
+    {
+        echo ""
+        echo "# Aliases for restarting Odoo containers"
+        echo "alias 'restart odoo11'='restart_odoo11'"
+        echo "alias 'restart odoo14'='restart_odoo14'"
+    } >> ~/.bashrc
+
+    echo "Reloading .bashrc..."
+    source ~/.bashrc || echo "Please run 'source ~/.bashrc' manually to apply changes."
+}
+
 # Main execution
 echo "Setting up Odoo development environment..."
 
@@ -227,6 +262,10 @@ create_odoo_conf_11
 
 # Start containers
 start_containers
+
+# Call new functions
+add_restart_commands
+add_bashrc_aliases
 
 echo "[INFO] Odoo development environment setup complete!"
 echo "Odoo 14 available at: http://localhost:1469"
