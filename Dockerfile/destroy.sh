@@ -8,10 +8,10 @@
 set -e
 
 # Default search path (root of the file system or user's home, or adjust as needed)
-SEARCH_PATH="${SEARCH_PATH:-/}"
+SEARCH_PATH="${SEARCH_PATH:-$HOME}"
 
 # Directories to search for docker-compose.yml files
-TARGET_DIRS=("odoo11" "odoo14")
+TARGET_DIRS=("EXPERT/odoo11" "EXPERT/odoo14")
 
 # Function to find docker-compose.yml files inside directories named odoo11 or odoo14
 stop_containers_and_remove_volumes() {
