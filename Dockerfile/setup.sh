@@ -65,21 +65,21 @@ check_install_docker() {
         fi
         # Add user to docker group for all supported OS
         sudo usermod -aG docker $USER
-        echo "Docker installed successfully."
+        echo "[INFO] Docker installed successfully."
     else
-        echo "Docker is already installed."
+        echo "[INFO] Docker is already installed."
     fi
 }
 
 # Function to check and install Docker Compose
 check_install_docker_compose() {
     if ! command -v docker-compose &> /dev/null; then
-        echo "Docker Compose not found. Installing Docker Compose..."
+        echo "[INFO] Docker Compose not found. Installing Docker Compose..."
         sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
         sudo chmod +x /usr/local/bin/docker-compose
-        echo "Docker Compose installed successfully."
+        echo "[INFO] Docker Compose installed successfully."
     else
-        echo "Docker Compose is already installed."
+        echo "[INFO] Docker Compose is already installed."
     fi
 }
 
@@ -202,10 +202,10 @@ EOF
 # Function to start Docker containers
 start_containers() {
     for version in "${VERSIONS[@]}"; do
-        echo "Starting Odoo ${version} containers..."
+        echo "[INFO] Starting Odoo ${version} containers..."
         cd "$BASE_DIR/odoo${version}"
         docker-compose up -d
-        echo "Odoo ${version} containers started"
+        echo "[INFO] Odoo ${version} containers started"
     done
 }
 
@@ -248,7 +248,7 @@ create_restart_commands() {
 }
 
 # Main execution
-echo "Setting up Odoo development environment..."
+echo "[INFO] Setting up Odoo development environment..."
 
 # Check and install prerequisites
 check_install_docker
@@ -268,51 +268,40 @@ start_containers
 create_restart_commands
 
 
-#!/bin/bash
-
-# Final message with color and formatting
-echo -e "\n\033[1;32m+-----------------------------------------------------------+\033[0m"
-echo -e "\033[1;32m| ✅  Odoo development environment setup complete!         |\033[0m"
-echo -e "\033[1;32m| Your Odoo development environment is ready for use.      |\033[0m"
-echo -e "\033[1;32m| Here’s how to get started:                               |\033[0m"
-echo -e "\033[1;32m|                                                           |\033[0m"
-echo -e "\033[1;34m| 🔧 **Working with Odoo:**                                 |\033[0m"
-echo -e "\033[1;34m|  ➤ You can access Odoo 14 at: \033[1;36m🔗 http://localhost:1469\033[0m   |"
-echo -e "\033[1;34m|  ➤ You can access Odoo 11 at: \033[1;36m🔗 http://localhost:1169\033[0m   |"
-echo -e "\033[1;34m|                                                           |\033[0m"
-echo -e "\033[1;34m| 💡 **How to add custom modules:**                         |\033[0m"
-echo -e "\033[1;34m|  1. Navigate to the 'addons' directory for the version    |\033[0m"
-echo -e "\033[1;34m|     of Odoo you want to work with:                        |\033[0m"
-echo -e "\033[1;34m|     - Odoo 14: $BASE_DIR/odoo14/addons                    |\033[0m"
-echo -e "\033[1;34m|     - Odoo 11: $BASE_DIR/odoo11/addons                    |\033[0m"
-echo -e "\033[1;34m|  2. Place your custom modules inside the respective 'addons'|\033[0m"
-echo -e "\033[1;34m|     folder.                                               |\033[0m"
-echo -e "\033[1;34m|  3. **Important:** If your custom modules are not detected|\033[0m"
-echo -e "\033[1;34m|     by Odoo, you might need to add the path to your       |\033[0m"
-echo -e "\033[1;34m|     'addons' directory in the corresponding `odoo.conf`   |\033[0m"
-echo -e "\033[1;34m|     file.                                                 |\033[0m"
-echo -e "\033[1;34m|     - You can find the `odoo.conf` file at:               |\033[0m"
-echo -e "\033[1;34m|       - Odoo 14: $BASE_DIR/odoo14/config/odoo.conf        |\033[0m"
-echo -e "\033[1;34m|       - Odoo 11: $BASE_DIR/odoo11/config/odoo.conf        |\033[0m"
-echo -e "\033[1;34m|  4. Restart Odoo to see the new modules appear by running |\033[0m"
-echo -e "\033[1;34m|     one of the following commands:                        |\033[0m"
-echo -e "\033[1;34m|     - Restart Odoo 14: \033[1;36mrestart-odoo14\033[0m                    |"
-echo -e "\033[1;34m|     - Restart Odoo 11: \033[1;36mrestart-odoo11\033[0m                    |"
-echo -e "\033[1;34m|                                                           |\033[0m"
-echo -e "\033[1;34m| 💡 **Commands created:**                                  |\033[0m"
-echo -e "\033[1;34m|  ➤ \033[1;36mstop-odoo11\033[0m                                            |"
-echo -e "\033[1;34m|  ➤ \033[1;36mstop-odoo14\033[0m                                            |"
-echo -e "\033[1;34m|  ➤ \033[1;36mstart-odoo11\033[0m                                           |"
-echo -e "\033[1;34m|  ➤ \033[1;36mstart-odoo14\033[0m                                           |"
-echo -e "\033[1;34m|  ➤ \033[1;36mrestart-odoo11\033[0m                                         |"
-echo -e "\033[1;34m|  ➤ \033[1;36mrestart-odoo14\033[0m                                         |"
-echo -e "\033[1;34m|                                                           |\033[0m"
-echo -e "\033[1;34m| 🚀 **Development Tips:**                                  |\033[0m"
-echo -e "\033[1;34m|  - Use Docker Compose to manage the environment easily.   |\033[0m"
-echo -e "\033[1;34m|  - Your changes will take effect after restarting the     |\033[0m"
-echo -e "\033[1;34m|    respective Odoo container.                             |\033[0m"
-echo -e "\033[1;32m|                                                           |\033[0m"
-echo -e "\033[1;32m| Best regards,                                             |\033[0m"
-echo -e "\033[1;32m| Moutaz Muhammad                                           |\033[0m"
-echo -e "\033[1;32m+-----------------------------------------------------------+\033[0m"
+echo -e "\n\033[1;32m+###############################################################################################################################+\033[0m"
+echo -e "\033[1;32m  ✅  Odoo development environment setup complete! Your Odoo development environment is ready for use. Here’s how to get started: \033[0m"
+echo -e "\n\033[1;32m+###############################################################################################################################+\033[0m"
+echo -e "\033[1;32m                                                           \033[0m"
+echo -e "\033[1;34m  🔧 **Working with Odoo:**                                 \033[0m"
+echo -e "\033[1;34m      ➤ You can access Odoo 14 at: \033[1;36m🔗 http://localhost:1469   \033[0m"
+echo -e "\033[1;34m      ➤ You can access Odoo 11 at: \033[1;36m🔗 http://localhost:1169   \033[0m"
+echo -e "\033[1;32m                                                           \033[0m"
+echo -e "\033[1;34m  💡 **How to add custom modules:**                         \033[0m"
+echo -e "\033[1;34m          1. Navigate to the 'addons' directory for the version of Odoo you want to work with: \033[0m"
+echo -e "\033[1;34m             - Odoo 14: $BASE_DIR/odoo14/addons                    \033[0m"
+echo -e "\033[1;34m             - Odoo 11: $BASE_DIR/odoo11/addons                    \033[0m"
+echo -e "\033[1;34m          2. Place your custom modules inside the respective 'addons' folder. \033[0m"
+echo -e "\033[1;34m          3. **Important:** If your custom modules are not detected by Odoo, you might need to add the path to your 'addons' directory in the corresponding \`odoo.conf\` file. \033[0m"
+echo -e "\033[1;34m             - You can find the \`odoo.conf\` file at:               \033[0m"
+echo -e "\033[1;34m               - Odoo 14: $BASE_DIR/odoo14/config/odoo.conf        \033[0m"
+echo -e "\033[1;34m               - Odoo 11: $BASE_DIR/odoo11/config/odoo.conf        \033[0m"
+echo -e "\033[1;34m          4. Restart Odoo to see the new modules appear by running one of the following commands: \033[0m"
+echo -e "\033[1;34m             - Restart Odoo 14: \033[1;36mrestart-odoo14\033[0m                    \033[0m"
+echo -e "\033[1;34m             - Restart Odoo 11: \033[1;36mrestart-odoo11\033[0m                    \033[0m"
+echo -e "\033[1;32m                                                           \033[0m"
+echo -e "\033[1;34m  💡 **Commands created:**                                  \033[0m"
+echo -e "\033[1;34m       ➤ \033[1;36mstop-odoo11\033[0m                                            \033[0m"
+echo -e "\033[1;34m       ➤ \033[1;36mstop-odoo14\033[0m                                            \033[0m"
+echo -e "\033[1;34m       ➤ \033[1;36mstart-odoo11\033[0m                                           \033[0m"
+echo -e "\033[1;34m       ➤ \033[1;36mstart-odoo14\033[0m                                           \033[0m"
+echo -e "\033[1;34m       ➤ \033[1;36mrestart-odoo11\033[0m                                         \033[0m"
+echo -e "\033[1;34m       ➤ \033[1;36mrestart-odoo14\033[0m                                         \033[0m"
+echo -e "\033[1;32m                                                           \033[0m"
+echo -e "\033[1;34m  🚀 **Development Tips:**                                  \033[0m"
+echo -e "\033[1;34m      - Use Docker Compose to manage the environment easily.   \033[0m"
+echo -e "\033[1;34m      - Your changes will take effect after restarting the respective Odoo container. \033[0m"
+echo -e "\033[1;32m                                                           \033[0m"
+echo -e "\033[1;32m  Best regards,                                             \033[0m"
+echo -e "\033[1;32m  Moutaz Muhammad                                           \033[0m"
+echo -e "\n\033[1;32m+###############################################################################################################################+\033[0m"
 
