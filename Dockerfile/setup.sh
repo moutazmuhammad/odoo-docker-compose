@@ -224,8 +224,32 @@ create_restart_commands() {
     echo '#!/bin/bash' | sudo tee /usr/local/bin/restart-odoo14 > /dev/null
     echo "cd $BASE_DIR/odoo14 && docker-compose restart" | sudo tee -a /usr/local/bin/restart-odoo14 > /dev/null
     sudo chmod +x /usr/local/bin/restart-odoo14
+    
+    # Create stop-odoo11 command
+    echo '#!/bin/bash' | sudo tee /usr/local/bin/stop-odoo11 > /dev/null
+    echo "cd $BASE_DIR/odoo11 && docker-compose down" | sudo tee -a /usr/local/bin/stop-odoo11 > /dev/null
+    sudo chmod +x /usr/local/bin/restart-odoo11
+
+    # Create stop-odoo14 command
+    echo '#!/bin/bash' | sudo tee /usr/local/bin/stop-odoo14 > /dev/null
+    echo "cd $BASE_DIR/odoo14 && docker-compose down" | sudo tee -a /usr/local/bin/stop-odoo14 > /dev/null
+    sudo chmod +x /usr/local/bin/restart-odoo14
+
+    # Create start-odoo11 command
+    echo '#!/bin/bash' | sudo tee /usr/local/bin/start-odoo11 > /dev/null
+    echo "cd $BASE_DIR/odoo11 && docker-compose up -d" | sudo tee -a /usr/local/bin/start-odoo11 > /dev/null
+    sudo chmod +x /usr/local/bin/restart-odoo11
+
+    # Create start-odoo14 command
+    echo '#!/bin/bash' | sudo tee /usr/local/bin/start-odoo14 > /dev/null
+    echo "cd $BASE_DIR/odoo14 && docker-compose up -d" | sudo tee -a /usr/local/bin/start-odoo14 > /dev/null
+    sudo chmod +x /usr/local/bin/restart-odoo14
 
     echo "Commands created:"
+    echo "  ➤ stop-odoo11"
+    echo "  ➤ stop-odoo14"
+    echo "  ➤ start-odoo11"
+    echo "  ➤ start-odoo14"
     echo "  ➤ restart-odoo11"
     echo "  ➤ restart-odoo14"
 }
@@ -251,5 +275,25 @@ start_containers
 create_restart_commands
 
 echo -e "\n✅  Odoo development environment setup complete!"
-echo "🔗  Odoo 14: http://localhost:1469"
-echo "🔗  Odoo 11: http://localhost:1169"
+echo -e "\nYour Odoo development environment is ready for use. Here’s how to get started:"
+echo -e "\n🔧 **Working with Odoo:**"
+echo -e "  ➤ You can access Odoo 14 at: 🔗 http://localhost:1469"
+echo -e "  ➤ You can access Odoo 11 at: 🔗 http://localhost:1169"
+echo -e "\n💡 **How to add custom modules:**"
+echo -e "  1. Navigate to the 'addons' directory for the version of Odoo you want to work with:"
+echo -e "     - Odoo 14: $BASE_DIR/odoo14/addons"
+echo -e "     - Odoo 11: $BASE_DIR/odoo11/addons"
+echo -e "  2. Place your custom modules inside the respective 'addons' folder."
+echo -e "  3. **Important:** If your custom modules are not detected by Odoo, you might need to add the path to your 'addons' directory in the corresponding `odoo.conf` file."
+echo -e "     - You can find the `odoo.conf` file at:"
+echo -e "       - Odoo 14: $BASE_DIR/odoo14/config/odoo.conf"
+echo -e "       - Odoo 11: $BASE_DIR/odoo11/config/odoo.conf"
+echo -e "  4. Restart Odoo to see the new modules appear by running one of the following commands:"
+echo -e "     - Restart Odoo 14: restart-odoo14"
+echo -e "     - Restart Odoo 11: restart-odoo11"
+echo -e "\n🚀 **Development Tips:**"
+echo -e "  - Use Docker Compose to manage the environment easily."
+echo -e "  - Your changes will take effect after restarting the respective Odoo container."
+echo -e "\nBest regards,"
+echo -e "Moutaz Muhammad"
+
