@@ -301,7 +301,12 @@ echo -e "\033[1;34m  🚀 **Development Tips:**                                 
 echo -e "\033[1;34m      - Use Docker Compose to manage the environment easily.   \033[0m"
 echo -e "\033[1;34m      - Your changes will take effect after restarting the respective Odoo container. \033[0m"
 echo -e "\033[1;32m                                                           \033[0m"
+echo -e "\033[1;32m  ✅  To view real-time logs for Odoo, run the following commands: \033[0m"
+echo -e "\033[1;32m      - For Odoo 14: \033[1;36mdocker-compose logs -f odoo14\033[0m \033[1;32m \033[0m"
+echo -e "\033[1;32m      - For Odoo 11: \033[1;36mdocker-compose logs -f odoo11\033[0m \033[1;32m \033[0m"
+echo -e "\033[1;32m                                                           \033[0m"
 echo -e "\033[1;32m  Best regards,                                             \033[0m"
 echo -e "\033[1;32m  Moutaz Muhammad                                           \033[0m"
 echo -e "\n\033[1;32m+###############################################################################################################################+\033[0m"
+
 
