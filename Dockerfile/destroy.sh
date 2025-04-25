@@ -35,6 +35,9 @@ stop_containers_and_remove_volumes() {
     done
 }
 
+sudo rm -rf /usr/local/bin/restart-odoo11
+sudo rm -rf /usr/local/bin/restart-odoo14
+
 # Main execution
 echo "Uninstalling Docker Compose environments..."
 
