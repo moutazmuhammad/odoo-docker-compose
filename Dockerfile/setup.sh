@@ -9,7 +9,7 @@
 set -e
 
 # Base directory for the project
-BASE_DIR="${BASE_DIR:-$PWD/EXPERT/}"
+BASE_DIR="${BASE_DIR:-$PWD/EXPERT}"
 mkdir -p $BASE_DIR
 VERSIONS=("11" "14")
 
@@ -212,27 +212,23 @@ start_containers() {
 create_restart_commands() {
     echo "Creating custom restart commands..."
 
-    # Export BASE_DIR so it's available in the restart scripts
-    export BASE_DIR
+    # Make sure we have write permission to /usr/local/bin/
+    sudo chmod u+w /usr/local/bin/
 
-    sudo tee /usr/local/bin/restart-odoo11 > /dev/null << EOF
-#!/bin/bash
-cd "\$BASE_DIR/odoo11" && docker-compose restart
-EOF
-
-    sudo tee /usr/local/bin/restart-odoo14 > /dev/null << EOF
-#!/bin/bash
-cd "\$BASE_DIR/odoo14" && docker-compose restart
-EOF
-
+    # Create restart-odoo11 command
+    echo '#!/bin/bash' | sudo tee /usr/local/bin/restart-odoo11 > /dev/null
+    echo "cd $BASE_DIR/odoo11 && docker-compose restart" | sudo tee -a /usr/local/bin/restart-odoo11 > /dev/null
     sudo chmod +x /usr/local/bin/restart-odoo11
+
+    # Create restart-odoo14 command
+    echo '#!/bin/bash' | sudo tee /usr/local/bin/restart-odoo14 > /dev/null
+    echo "cd $BASE_DIR/odoo14 && docker-compose restart" | sudo tee -a /usr/local/bin/restart-odoo14 > /dev/null
     sudo chmod +x /usr/local/bin/restart-odoo14
 
     echo "Commands created:"
     echo "  ➤ restart-odoo11"
     echo "  ➤ restart-odoo14"
 }
-
 
 # Main execution
 echo "Setting up Odoo development environment..."
