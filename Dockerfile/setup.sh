@@ -97,6 +97,7 @@ create_docker_compose_14() {
 version: '3.3'
 services:
   odoo14:
+    container_name: odoo14
     image: moutazmuhammad/odoo:14.0
     restart: always 
     depends_on:
@@ -115,6 +116,7 @@ services:
       - ./addons:/mnt/extra-addons
       
   db14:
+    container_name: db14
     image: postgres:14
     restart: always 
     environment:
@@ -136,6 +138,7 @@ create_docker_compose_11() {
 version: '3.3'
 services:
   odoo11:
+    container_name: odoo11
     image: moutazmuhammad/odoo:11.0
     restart: always 
     depends_on:
@@ -154,6 +157,7 @@ services:
       - ./addons:/mnt/extra-addons
       
   db11:
+    container_name: db11
     image: postgres:14
     restart: always 
     environment:
