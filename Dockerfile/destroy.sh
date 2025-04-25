@@ -20,7 +20,7 @@ stop_containers_and_remove_volumes() {
     # Use find to search for directories named odoo11 or odoo14 containing docker-compose.yml files
     for dir in "${TARGET_DIRS[@]}"; do
         # Find the docker-compose.yml file in odoo11 or odoo14 directories
-        find "$SEARCH_PATH" -type f -path "*/$dir/docker-compose.yml" | while read docker_compose_file; do
+        find "$SEARCH_PATH" -type f -path "*/$dir/docker-compose.yaml" 2>/dev/null | while read docker_compose_file; do
             # Extract the directory containing docker-compose.yml
             docker_compose_dir=$(dirname "$docker_compose_file")
             echo "Stopping containers and removing volumes in directory: $docker_compose_dir"
