@@ -55,9 +55,7 @@ check_install_docker() {
         # Allow current user to run Docker without sudo
         sudo groupadd docker 2>/dev/null || true
         sudo usermod -aG docker "$USER"
-        newgrp docker <<EONG
-echo "[INFO] Docker installed and user added to docker group."
-EONG
+        sudo chmod 666 /var/run/docker.sock
 
     else
         echo "[INFO] Docker is already installed."
