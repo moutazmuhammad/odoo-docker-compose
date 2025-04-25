@@ -28,7 +28,6 @@ check_install_docker() {
     if ! command -v docker &> /dev/null; then
         echo "Docker not found. Installing Docker..."
         if [ "$OS" == "ubuntu" ]; then
-            # Ubuntu-specific Docker installation
             sudo apt-get update
             sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
             curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -37,35 +36,29 @@ check_install_docker() {
             sudo apt-get install -y docker-ce docker-ce-cli containerd.io
         elif [ "$OS" == "centos" ] || [ "$OS" == "rhel" ]; then
             if [[ "$VER" == 7.* ]]; then
-                # CentOS/RHEL 7 uses yum
-                sudo yum remove docker docker-common docker-selinux docker-engine
+                sudo yum remove -y docker docker-common docker-selinux docker-engine
                 sudo yum install -y yum-utils device-mapper-persistent-data lvm2
-                if [ "$OS" == "centos" ]; then
-                    sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-                elif [ "$OS" == "rhel" ]; then
-                    sudo yum-config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
-                fi
-                sudo yum install docker-ce
+                sudo yum-config-manager --add-repo https://download.docker.com/linux/$OS/docker-ce.repo
+                sudo yum install -y docker-ce
             else
-                # CentOS/RHEL 8 and later use dnf
                 sudo dnf -y install dnf-plugins-core
-                if [ "$OS" == "centos" ]; then
-                    sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-                elif [ "$OS" == "rhel" ]; then
-                    sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
-                fi
-                sudo dnf install docker-ce docker-ce-cli containerd.io
+                sudo dnf config-manager --add-repo https://download.docker.com/linux/$OS/docker-ce.repo
+                sudo dnf install -y docker-ce docker-ce-cli containerd.io
             fi
-            # Start and enable Docker service for CentOS/RHEL
             sudo systemctl enable docker.service
             sudo systemctl start docker.service
         else
             echo "Unsupported OS: $OS"
             exit 1
         fi
-        # Add user to docker group for all supported OS
-        sudo usermod -aG docker $USER
-        echo "[INFO] Docker installed successfully."
+
+        # Allow current user to run Docker without sudo
+        sudo groupadd docker 2>/dev/null || true
+        sudo usermod -aG docker "$USER"
+        newgrp docker <<EONG
+echo "[INFO] Docker installed and user added to docker group."
+EONG
+
     else
         echo "[INFO] Docker is already installed."
     fi
@@ -82,6 +75,7 @@ check_install_docker_compose() {
         echo "[INFO] Docker Compose is already installed."
     fi
 }
+
 
 # Function to create directory structure
 create_directory_structure() {
