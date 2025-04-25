@@ -209,7 +209,7 @@ create_restart_commands() {
     echo "Creating custom restart commands..."
 
     # Make sure we have write permission to /usr/local/bin/
-    sudo chmod u+w /usr/local/bin/
+    sudo chmod u+wx /usr/local/bin/
 
     # Create restart-odoo11 command
     echo '#!/bin/bash' | sudo tee /usr/local/bin/restart-odoo11 > /dev/null
