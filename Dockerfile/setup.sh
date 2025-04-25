@@ -209,37 +209,28 @@ create_restart_commands() {
     echo "Creating custom restart commands..."
 
     # Make sure we have write permission to /usr/local/bin/
-    sudo chmod u+wx /usr/local/bin/
+    sudo chmod u+w /usr/local/bin/
 
     # Create restart-odoo11 command
     echo '#!/bin/bash' | sudo tee /usr/local/bin/restart-odoo11 > /dev/null
     echo "cd $BASE_DIR/odoo11 && docker-compose restart" | sudo tee -a /usr/local/bin/restart-odoo11 > /dev/null
-    sudo chmod +x /usr/local/bin/restart-odoo11
-
     # Create restart-odoo14 command
     echo '#!/bin/bash' | sudo tee /usr/local/bin/restart-odoo14 > /dev/null
     echo "cd $BASE_DIR/odoo14 && docker-compose restart" | sudo tee -a /usr/local/bin/restart-odoo14 > /dev/null
-    sudo chmod +x /usr/local/bin/restart-odoo14
-    
     # Create stop-odoo11 command
     echo '#!/bin/bash' | sudo tee /usr/local/bin/stop-odoo11 > /dev/null
     echo "cd $BASE_DIR/odoo11 && docker-compose down" | sudo tee -a /usr/local/bin/stop-odoo11 > /dev/null
-    sudo chmod +x /usr/local/bin/restart-odoo11
-
     # Create stop-odoo14 command
     echo '#!/bin/bash' | sudo tee /usr/local/bin/stop-odoo14 > /dev/null
     echo "cd $BASE_DIR/odoo14 && docker-compose down" | sudo tee -a /usr/local/bin/stop-odoo14 > /dev/null
-    sudo chmod +x /usr/local/bin/restart-odoo14
-
     # Create start-odoo11 command
     echo '#!/bin/bash' | sudo tee /usr/local/bin/start-odoo11 > /dev/null
     echo "cd $BASE_DIR/odoo11 && docker-compose up -d" | sudo tee -a /usr/local/bin/start-odoo11 > /dev/null
-    sudo chmod +x /usr/local/bin/restart-odoo11
-
     # Create start-odoo14 command
     echo '#!/bin/bash' | sudo tee /usr/local/bin/start-odoo14 > /dev/null
     echo "cd $BASE_DIR/odoo14 && docker-compose up -d" | sudo tee -a /usr/local/bin/start-odoo14 > /dev/null
-    sudo chmod +x /usr/local/bin/restart-odoo14
+    
+    sudo chmod +x /usr/local/bin/*-odoo*
     
 }
 
