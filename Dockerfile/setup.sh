@@ -9,7 +9,7 @@
 set -e
 
 # Base directory for the project
-BASE_DIR="$PWD/EXPERT/"
+BASE_DIR="${BASE_DIR:-$PWD/EXPERT/}"
 mkdir -p $BASE_DIR
 VERSIONS=("11" "14")
 
@@ -209,40 +209,30 @@ start_containers() {
     done
 }
 
-# Function to add restart commands to /usr/local/bin
-add_restart_commands() {
-    echo "Adding restart commands..."
+create_restart_commands() {
+    echo "Creating custom restart commands..."
 
-    sudo tee /usr/local/bin/restart_odoo11 > /dev/null << 'EOF'
+    # Export BASE_DIR so it's available in the restart scripts
+    export BASE_DIR
+
+    sudo tee /usr/local/bin/restart-odoo11 > /dev/null << EOF
 #!/bin/bash
-docker restart odoo11_odoo11_1 db11_odoo11_1
+cd "\$BASE_DIR/odoo11" && docker-compose restart
 EOF
 
-    sudo tee /usr/local/bin/restart_odoo14 > /dev/null << 'EOF'
+    sudo tee /usr/local/bin/restart-odoo14 > /dev/null << EOF
 #!/bin/bash
-docker restart odoo14_odoo14_1 db14_odoo14_1
+cd "\$BASE_DIR/odoo14" && docker-compose restart
 EOF
 
-    sudo chmod +x /usr/local/bin/restart_odoo11
-    sudo chmod +x /usr/local/bin/restart_odoo14
+    sudo chmod +x /usr/local/bin/restart-odoo11
+    sudo chmod +x /usr/local/bin/restart-odoo14
 
-    echo "Restart command scripts created in /usr/local/bin"
+    echo "Commands created:"
+    echo "  ➤ restart-odoo11"
+    echo "  ➤ restart-odoo14"
 }
 
-# Function to update bashrc with alias commands
-add_bashrc_aliases() {
-    echo "Adding aliases to ~/.bashrc..."
-
-    {
-        echo ""
-        echo "# Aliases for restarting Odoo containers"
-        echo "alias 'restart odoo11'='restart_odoo11'"
-        echo "alias 'restart odoo14'='restart_odoo14'"
-    } >> ~/.bashrc
-
-    echo "Reloading .bashrc..."
-    source ~/.bashrc || echo "Please run 'source ~/.bashrc' manually to apply changes."
-}
 
 # Main execution
 echo "Setting up Odoo development environment..."
@@ -262,11 +252,8 @@ create_odoo_conf_11
 
 # Start containers
 start_containers
+create_restart_commands
 
-# Call new functions
-add_restart_commands
-add_bashrc_aliases
-
-echo "[INFO] Odoo development environment setup complete!"
-echo "Odoo 14 available at: http://localhost:1469"
-echo "Odoo 11 available at: http://localhost:1169"
+echo -e "\n✅  Odoo development environment setup complete!"
+echo "🔗  Odoo 14: http://localhost:1469"
+echo "🔗  Odoo 11: http://localhost:1169"
