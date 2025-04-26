@@ -2,8 +2,9 @@
 
 ##############################################################################################################################
 # Author: Moutaz Muhammad <moutazmuhamad@gmail.com>
-# Modified to support Ubuntu 16, 20, 22, 24, CentOS, and Red Hat
+# Support Ubuntu 16, 20, 22, 24, CentOS, and Red Hat
 
+# Setup odoo11 & odoo14 environment
 # curl -s https://raw.githubusercontent.com/moutazmuhammad/odoo-docker-compose/main/Dockerfile/scripts/linux_setup.sh | bash
 ##############################################################################################################################
 set -e
