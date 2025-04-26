@@ -2,9 +2,16 @@ import os
 import subprocess
 from pathlib import Path
 
+#######################################################################################################################################
 # Author: Moutaz Muhammad <moutazmuhamad@gmail.com>
+# Support Windows and MAC
+
 # Script to stop containers and remove volumes for docker-compose files
 # found inside directories named odoo11 or odoo14 on Windows
+
+# Setup odoo11 & odoo14 environment
+# Invoke-RestMethod -Uri https://raw.githubusercontent.com/moutazmuhammad/odoo_docker/main/Dockerfile/scripts/windows_setup.py | python
+########################################################################################################################################
 
 # Set the default search path (default is the user's home directory)
 search_path = os.environ.get("SEARCH_PATH", str(Path.home()))
