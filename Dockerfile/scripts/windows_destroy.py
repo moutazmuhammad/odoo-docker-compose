@@ -37,6 +37,12 @@ def stop_containers_and_remove_volumes():
                     print(f"[INFO] Containers stopped and volumes removed in: {docker_compose_dir}")
                 except subprocess.CalledProcessError as e:
                     print(f"[ERROR] Failed in {docker_compose_dir}: {e}")
+    try:
+        parent_dir = Path(search_path) / "ODOO_WORK"
+        shutil.rmtree(parent_dir)
+        print(f"[INFO] Directory removed: {parent_dir}")
+    except Exception as e:
+        print(f"[ERROR] Failed to remove directory {parent_dir}: {e}")
 
 if __name__ == "__main__":
     print("[INFO] Uninstalling Docker Compose environments...")
