@@ -14,7 +14,7 @@ set -e
 SEARCH_PATH="${SEARCH_PATH:-$HOME}"
 
 # Directories to search for docker-compose.yml files
-TARGET_DIRS=("EXPERT/odoo11" "EXPERT/odoo14")
+TARGET_DIRS=("ODOO_WORK/odoo11" "ODOO_WORK/odoo14")
 
 # Function to find docker-compose.yml files inside directories named odoo11 or odoo14
 stop_containers_and_remove_volumes() {
