@@ -7,17 +7,17 @@
 - Copy zip db that you want to restore to remote server
 
 ```sh
-scp -P 7812 zuhair_preprod_db_prod_2023-10-25_12-07-30.zip  root@143.198.105.101:/home/odoo/ZUHAIR/ZUHAIR-PROD
+scp -P 7812 database-name-10-25_12-07-30.zip  root@143.198.105.101:/home/odoo/path
 ```
 
 ### In the remote server
 
 ```sh
-unzip zuhair_preprod_db_prod_2023-10-25_12-07-30.zip -d ./zuhair-db
+unzip database-name-10-25_12-07-30.zip -d ./project-name-db
 ```
 
 ```sh
-cd zuhair-db
+cd project-name-db
 ```
 
 
@@ -25,22 +25,22 @@ cd zuhair-db
 
 1. create new database
 ```sh
-docker exec -it zuhair-prod-db bash
+docker exec -it project-name-prod-db bash
 
 psql -U odoo -d postgres
 
-CREATE DATABASE zuhair_prod;
+CREATE DATABASE project-name_prod;
 ```
 
 ```sh
-docker exec -i zuhair-prod-db /bin/bash -c "PGPASSWORD=odoo pg_dump --username=odoo zuhair_prod" < dump.sql
+docker exec -i project-name-prod-db /bin/bash -c "PGPASSWORD=odoo pg_dump --username=odoo project-name_prod" < dump.sql
 ```
 
 
 
 - Dump using psql
 ```sh
-docker exec -i zuhair-prod-db /bin/bash -c "PGPASSWORD=odoo pg_dump --username=odoo zuhair_prod" > dump.sql
+docker exec -i project-name-prod-db /bin/bash -c "PGPASSWORD=odoo pg_dump --username=odoo project-name_prod" > dump.sql
 ```
 
 #
@@ -51,7 +51,7 @@ docker exec -i zuhair-prod-db /bin/bash -c "PGPASSWORD=odoo pg_dump --username=o
 - Copy zip db that you want to restore to remote server
 
 ```sh
-scp -P 7812 zuhair_preprod_db_prod_2023-10-25_15-20-37.dump  root@143.198.105.101:/home/odoo
+scp -P 7812 database-name-10-25_15-20-37.dump  root@143.198.105.101:/home/odoo
 ```
 
 ### In the remote server
@@ -63,15 +63,15 @@ scp -P 7812 zuhair_preprod_db_prod_2023-10-25_15-20-37.dump  root@143.198.105.10
 
 1. create new database
 ```sh
-docker exec -it zuhair-prod-db bash
+docker exec -it project-name-prod-db bash
 
 psql -U odoo -d postgres
 
-CREATE DATABASE zuhair_prod_two;
+CREATE DATABASE project-name_prod_two;
 ```
 
 ```sh
-docker exec -i zuhair-prod-db /bin/bash -c "PGPASSWORD=odoo  pg_restore --username=odoo  -d zuhair_prod_two " < zuhair_preprod_db_prod_2023-10-25_15-20-37.dump
+docker exec -i project-name-prod-db /bin/bash -c "PGPASSWORD=odoo  pg_restore --username=odoo  -d project-name_prod_two " < database-name-10-25_15-20-37.dump
 ```
 
 
@@ -93,15 +93,15 @@ UPDATE res_users SET password='admin' WHERE id=2;
 -- This will disconnect all users connected to the database
 SELECT pg_terminate_backend(pid)
 FROM pg_stat_activity
-WHERE datname = 'zuhair_prod';
+WHERE datname = 'project-name_prod';
 ```
 
 
  ```sh
-docker exec -it zuhair-prod-db bash
+docker exec -it project-name-prod-db bash
 
 psql -U odoo -d postgres
 
-DROP DATABASE zuhair_prod_two;
+DROP DATABASE project-name_prod_two;
 ```
 
