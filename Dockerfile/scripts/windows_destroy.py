@@ -39,6 +39,8 @@ def stop_containers_and_remove_volumes():
                     print(f"[ERROR] Failed in {docker_compose_dir}: {e}")
     try:
         parent_dir = Path(search_path) / "ODOO_WORK"
+        print(f"[INFO] Checking contents of {parent_dir} before deletion: {os.listdir(parent_dir)}")
+
         shutil.rmtree(parent_dir)
         print(f"[INFO] Directory removed: {parent_dir}")
     except Exception as e:
