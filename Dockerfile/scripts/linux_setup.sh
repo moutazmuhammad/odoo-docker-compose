@@ -9,7 +9,7 @@
 set -e
 
 # Base directory for the project
-BASE_DIR="${BASE_DIR:-$PWD/EXPERT}"
+BASE_DIR="${BASE_DIR:-$PWD/ODOO_WORK}"
 mkdir -p $BASE_DIR
 VERSIONS=("11" "14")
 
