@@ -3,6 +3,14 @@ import subprocess
 import sys
 from pathlib import Path
 
+#######################################################################################################################################
+# Author: Moutaz Muhammad <moutazmuhamad@gmail.com>
+# Support Windows and MAC
+
+# Setup odoo11 & odoo14 environment
+# Invoke-RestMethod -Uri https://raw.githubusercontent.com/moutazmuhammad/odoo_docker/main/Dockerfile/scripts/windows_setup.py | python
+########################################################################################################################################
+
 # Base directory for the project
 BASE_DIR = os.environ.get('BASE_DIR', str(Path.cwd() / "ODOO_WORK"))
 os.makedirs(BASE_DIR, exist_ok=True)
