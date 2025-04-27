@@ -89,6 +89,7 @@ platformdirs
 proglog==0.1.10
 proto-plus==1.22.2
 protobuf
+pydantic
 psutil==4.3.1
 psycopg2==2.9.5
 psycopg2-binary==2.9.5
