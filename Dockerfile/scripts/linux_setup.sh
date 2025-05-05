@@ -87,7 +87,7 @@ create_directory_structure() {
 # Function to create docker-compose.yaml for Odoo 14
 create_docker_compose_14() {
     cat > "$BASE_DIR/odoo14/docker-compose.yaml" << 'EOF'
-version: "3.8"
+---
 services:
   odoo14:
     container_name: odoo14
@@ -128,7 +128,7 @@ EOF
 # Function to create docker-compose.yaml for Odoo 11
 create_docker_compose_11() {
     cat > "$BASE_DIR/odoo11/docker-compose.yaml" << 'EOF'
-version: "3.8"
+---
 services:
   odoo11:
     container_name: odoo11
