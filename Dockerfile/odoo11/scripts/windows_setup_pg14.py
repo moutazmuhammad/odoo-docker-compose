@@ -99,7 +99,7 @@ def print_final_message():
     print(f"{GREEN} Odoo development environment setup complete! Your Odoo development environment is ready for use. Here’s how to get started: {RESET}")
     print(f"\n{GREEN}+{'#' * 118}+{RESET}")
     print(f"{BLUE}  # Working with Odoo:{RESET}")
-    print(f"{BLUE}      - You can access Odoo 11 at: {CYAN}🔗 http://localhost:1169{RESET}")
+    print(f"{BLUE}      - You can access Odoo 11 at: http://localhost:1169{RESET}")
     print(f"{BLUE}  # How to add custom modules:{RESET}")
     print(f"{BLUE}          1. Navigate to the 'addons' directory for the version you want to work with:{RESET}")
     print(f"{BLUE}             - Odoo 11: {BASE_DIR}/addons{RESET}")
