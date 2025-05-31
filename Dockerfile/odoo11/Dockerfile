@@ -12,9 +12,9 @@ RUN apt-get update && \
     add-apt-repository ppa:deadsnakes/ppa -y && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-    python3.6 python3.6-venv python3.6-dev build-essential wget && \
-    ln -sf python3.6 /usr/bin/python3 && \
-    curl -sS https://bootstrap.pypa.io/pip/3.6/get-pip.py | python3.6 && \
+    python3.7 python3.7-venv python3.7-dev build-essential wget && \
+    ln -sf python3.7 /usr/bin/python3 && \
+    curl -sS https://bootstrap.pypa.io/pip/3.7/get-pip.py | python3.7 && \
     ln -sf /usr/local/bin/pip3 /usr/bin/pip && \
     pip install --no-cache-dir --upgrade setuptools wheel && \
     apt-get purge -y software-properties-common && \
@@ -40,10 +40,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # PostgreSQL client
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+ARG PG_VERSION=14
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     apt-get update && \
-    apt-get install -y --no-install-recommends postgresql-client-14 && \
+    apt-get install -y --no-install-recommends postgresql-client-${PG_VERSION} && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Node tools
@@ -62,7 +63,7 @@ RUN git init /opt/odoo && \
 
 # Install Python dependencies
 COPY requirements.txt /
-RUN pip3 install wheel setuptools && pip install --upgrade pip setuptools wheel && pip3 install --no-cache-dir -r /requirements.txt && rm -f /requirements.txt
+RUN pip3 install --no-cache-dir "setuptools<58" "wheel" && pip3 install --no-cache-dir -r /requirements.txt && rm -f /requirements.txt
 
 # Copy configs and setup permissions
 COPY ./entrypoint.sh /
