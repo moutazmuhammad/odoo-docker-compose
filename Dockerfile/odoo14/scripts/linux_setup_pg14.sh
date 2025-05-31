@@ -1,12 +1,12 @@
 #!/bin/bash
 
-##############################################################################################################################
+##########################################################################################################################################
 # Author: Moutaz Muhammad <moutazmuhamad@gmail.com>
 # Support Ubuntu 16, 20, 22, 24, CentOS, and Red Hat
 
 # Setup odoo14 & postgresql 14
-# curl -s https://raw.githubusercontent.com/moutazmuhammad/odoo-docker-compose/main/Dockerfile/scripts/linux_setup.sh | bash
-##############################################################################################################################
+# curl -s https://raw.githubusercontent.com/moutazmuhammad/odoo-docker-compose/main/Dockerfile/odoo14/scripts/linux_setup_pg14.sh | bash
+##########################################################################################################################################
 set -e
 
 # Base directory for the project
