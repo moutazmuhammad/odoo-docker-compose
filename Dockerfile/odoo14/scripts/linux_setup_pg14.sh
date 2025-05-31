@@ -181,8 +181,6 @@ echo -e "\033[1;34m          2. Place your custom modules inside the respective 
 echo -e "\033[1;34m          3. **Important:** If your custom modules are not detected by Odoo, you might need to add the path to your 'addons' directory in the corresponding \`odoo.conf\` file. \033[0m"
 echo -e "\033[1;34m             - You can find the \`odoo.conf\` file at:               \033[0m"
 echo -e "\033[1;34m               - Odoo 14: $BASE_DIR/config/odoo.conf        \033[0m"
-echo -e "\033[1;34m          4. Restart Odoo to see the new modules appear by running one of the following commands: \033[0m"
-echo -e "\033[1;34m             - Restart Odoo 14: \033[1;36mrestart-odoo14\033[0m                    \033[0m"
 echo -e "\033[1;32m                                                           \033[0m"
 echo -e "\033[1;34m  💡 **Commands created:**                                  \033[0m"
 echo -e "\033[1;34m       ➤ \033[1;36mdocker stop odoo14\033[0m                                            \033[0m"
