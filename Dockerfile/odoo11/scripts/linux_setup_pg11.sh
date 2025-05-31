@@ -177,8 +177,6 @@ echo -e "\033[1;34m             - Odoo 11: $BASE_DIR/addons                    \
 echo -e "\033[1;34m          2. Place your custom modules inside it.           \033[0m"
 echo -e "\033[1;34m          3. Update \`odoo.conf\` if needed:                 \033[0m"
 echo -e "\033[1;34m             - Path: $BASE_DIR/config/odoo.conf             \033[0m"
-echo -e "\033[1;34m          4. Restart Odoo using:                            \033[0m"
-echo -e "\033[1;34m             - \033[1;36mdocker restart odoo11\033[0m                    \033[0m"
 echo -e "\033[1;34m  💡 **Commands:**                                          \033[0m"
 echo -e "\033[1;34m       ➤ \033[1;36mdocker restart odoo11\033[0m                              \033[0m"
 echo -e "\033[1;34m       ➤ \033[1;36mdocker start odoo11\033[0m                                \033[0m"
