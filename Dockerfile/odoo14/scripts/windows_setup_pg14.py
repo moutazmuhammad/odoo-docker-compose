@@ -12,7 +12,7 @@ from pathlib import Path
 #####################################################################################################################################################
 
 # Base directory for the project
-BASE_DIR = os.environ.get('BASE_DIR', str(Path.cwd() / "ODOO_WORK"))
+BASE_DIR = os.environ.get('BASE_DIR', str(Path.cwd() / "ODOO14_pg14"))
 os.makedirs(BASE_DIR, exist_ok=True)
 VERSIONS = ["14"]
 
@@ -60,7 +60,7 @@ volumes:
   odoo14-web-data:
   odoo14-db-data:
 '''
-    with open(Path(BASE_DIR) / "odoo14" / "docker-compose.yaml", "w") as f:
+    with open(Path(BASE_DIR) / "docker-compose.yaml", "w") as f:
         f.write(compose_content)
 
 # Function to create odoo.conf for Odoo 14
@@ -75,7 +75,7 @@ db_password = odoo14
 addons_path = /opt/odoo/addons,/mnt/extra-addons
 data_dir = /var/lib/odoo
 '''
-    with open(Path(BASE_DIR) / "odoo14" / "config" / "odoo.conf", "w") as f:
+    with open(Path(BASE_DIR) / "config" / "odoo.conf", "w") as f:
         f.write(conf_content)
 
 # Function to start Docker containers
@@ -100,7 +100,7 @@ def print_final_message():
     print(f"{BLUE}      - You can access Odoo 14 at: {CYAN}🔗 http://localhost:1469{RESET}")
     print(f"{BLUE}  # How to add custom modules:{RESET}")
     print(f"{BLUE}          1. Navigate to the 'addons' directory for the version you want to work with:{RESET}")
-    print(f"{BLUE}             - Odoo 14: {BASE_DIR}/odoo14/addons{RESET}")
+    print(f"{BLUE}             - Odoo 14: {BASE_DIR}/addons{RESET}")
     print(f"{BLUE}          2. Place your custom modules inside the respective 'addons' folder.{RESET}")
     print(f"{BLUE}          3. If not detected, add the addons path inside the 'odoo.conf'.{RESET}")
     print(f"{BLUE}  # Development Tips:{RESET}")
