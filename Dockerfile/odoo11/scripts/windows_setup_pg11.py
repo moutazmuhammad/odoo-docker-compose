@@ -15,7 +15,7 @@ from pathlib import Path
 ######################################################################################################################################################
 
 # Base directory for the project
-BASE_DIR = os.environ.get('BASE_DIR', str(Path.cwd() / "ODOO11"))
+BASE_DIR = os.environ.get('BASE_DIR', str(Path.cwd() / "ODOO11_pg11"))
 os.makedirs(BASE_DIR, exist_ok=True)
 VERSIONS = ["11"]
 
