@@ -7,7 +7,7 @@ from pathlib import Path
 # Author: Moutaz Muhammad <moutazmuhamad@gmail.com>
 # Support Windows and MAC
 
-# Setup odoo11 & odoo14 environment
+# Setup odoo14 & odoo14 environment
 # Invoke-RestMethod -Uri https://raw.githubusercontent.com/moutazmuhammad/odoo_docker/main/Dockerfile/odoo14/scripts/windows_setup_pg14.py | python
 #####################################################################################################################################################
 
