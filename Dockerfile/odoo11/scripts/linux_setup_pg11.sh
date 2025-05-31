@@ -1,15 +1,16 @@
 #!/bin/bash
 
-##############################################################################################################################
+##########################################################################################################################################
 # Author: Moutaz Muhammad <moutazmuhamad@gmail.com>
 # Support Ubuntu 16, 20, 22, 24, CentOS, and Red Hat
 
 # Setup odoo11 & posgtresql11
-# curl -s https://raw.githubusercontent.com/moutazmuhammad/odoo-docker-compose/main/Dockerfile/scripts/linux_setup.sh | bash
+# curl -s https://raw.githubusercontent.com/moutazmuhammad/odoo-docker-compose/main/Dockerfile/odoo11/scripts/linux_setup_pg11.sh | bash
 
 # To upgrade module for terminal
 # docker exec -u odoo -it odoo11 odoo -u <MODULE_NAME> -d <DB_NAME> -c /etc/odoo/odoo.conf
-##############################################################################################################################
+##########################################################################################################################################
+
 set -e
 
 # Base directory for the project
