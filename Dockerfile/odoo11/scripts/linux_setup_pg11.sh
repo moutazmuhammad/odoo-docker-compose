@@ -19,7 +19,7 @@
 set -e
 
 # Base directory for the project
-BASE_DIR="${BASE_DIR:-$PWD/ODOO_WORK}"
+BASE_DIR="${BASE_DIR:-$PWD/ODOO11_pg11}"
 mkdir -p $BASE_DIR
 VERSIONS=("11")
 
@@ -88,8 +88,8 @@ check_install_docker_compose() {
 # Function to create directory structure
 create_directory_structure() {
     for version in "${VERSIONS[@]}"; do
-        mkdir -p "$BASE_DIR/odoo${version}/addons"
-        mkdir -p "$BASE_DIR/odoo${version}/config"
+        mkdir -p "$BASE_DIR/addons"
+        mkdir -p "$BASE_DIR/config"
     done
 }
 
@@ -153,7 +153,7 @@ EOF
 start_containers() {
     for version in "${VERSIONS[@]}"; do
         echo "[INFO] Starting Odoo ${version} containers..."
-        cd "$BASE_DIR/odoo${version}"
+        cd "$BASE_DIR"
         docker-compose up -d
         echo "[INFO] Odoo ${version} containers started"
     done
