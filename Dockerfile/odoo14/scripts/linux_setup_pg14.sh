@@ -86,7 +86,7 @@ create_directory_structure() {
 
 # Function to create docker-compose.yaml for Odoo 14
 create_docker_compose_14() {
-    cat > "$BASE_DIR/odoo14/docker-compose.yaml" << 'EOF'
+    cat > "$BASE_DIR/docker-compose.yaml" << 'EOF'
 ---
 services:
   odoo14:
@@ -127,7 +127,7 @@ EOF
 
 # Function to create odoo.conf for Odoo 14
 create_odoo_conf_14() {
-    cat > "$BASE_DIR/odoo14/config/odoo.conf" << 'EOF'
+    cat > "$BASE_DIR/config/odoo.conf" << 'EOF'
 [options]
 admin_passwd = admin14
 db_host = db14
@@ -158,13 +158,13 @@ create_restart_commands() {
 
     # Create restart-odoo14 command
     echo '#!/bin/bash' | sudo tee /usr/local/bin/restart-odoo14 > /dev/null
-    echo "cd $BASE_DIR/odoo14 && docker-compose restart" | sudo tee -a /usr/local/bin/restart-odoo14 > /dev/null
+    echo "cd $BASE_DIR && docker-compose restart" | sudo tee -a /usr/local/bin/restart-odoo14 > /dev/null
     # Create stop-odoo14 command
     echo '#!/bin/bash' | sudo tee /usr/local/bin/stop-odoo14 > /dev/null
-    echo "cd $BASE_DIR/odoo14 && docker-compose down" | sudo tee -a /usr/local/bin/stop-odoo14 > /dev/null
+    echo "cd $BASE_DIR && docker-compose down" | sudo tee -a /usr/local/bin/stop-odoo14 > /dev/null
     # Create start-odoo14 command
     echo '#!/bin/bash' | sudo tee /usr/local/bin/start-odoo14 > /dev/null
-    echo "cd $BASE_DIR/odoo14 && docker-compose up -d" | sudo tee -a /usr/local/bin/start-odoo14 > /dev/null
+    echo "cd $BASE_DIR && docker-compose up -d" | sudo tee -a /usr/local/bin/start-odoo14 > /dev/null
     
     sudo chmod +x /usr/local/bin/*-odoo*
     
@@ -198,11 +198,11 @@ echo -e "\033[1;34m      ➤ You can access Odoo 14 at: \033[1;36m🔗 http://lo
 echo -e "\033[1;32m                                                           \033[0m"
 echo -e "\033[1;34m  💡 **How to add custom modules:**                         \033[0m"
 echo -e "\033[1;34m          1. Navigate to the 'addons' directory for the version of Odoo you want to work with: \033[0m"
-echo -e "\033[1;34m             - Odoo 14: $BASE_DIR/odoo14/addons                    \033[0m"
+echo -e "\033[1;34m             - Odoo 14: $BASE_DIR/addons                    \033[0m"
 echo -e "\033[1;34m          2. Place your custom modules inside the respective 'addons' folder. \033[0m"
 echo -e "\033[1;34m          3. **Important:** If your custom modules are not detected by Odoo, you might need to add the path to your 'addons' directory in the corresponding \`odoo.conf\` file. \033[0m"
 echo -e "\033[1;34m             - You can find the \`odoo.conf\` file at:               \033[0m"
-echo -e "\033[1;34m               - Odoo 14: $BASE_DIR/odoo14/config/odoo.conf        \033[0m"
+echo -e "\033[1;34m               - Odoo 14: $BASE_DIR/config/odoo.conf        \033[0m"
 echo -e "\033[1;34m          4. Restart Odoo to see the new modules appear by running one of the following commands: \033[0m"
 echo -e "\033[1;34m             - Restart Odoo 14: \033[1;36mrestart-odoo14\033[0m                    \033[0m"
 echo -e "\033[1;32m                                                           \033[0m"
