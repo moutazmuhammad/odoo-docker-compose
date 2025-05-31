@@ -14,15 +14,15 @@ from pathlib import Path
 ########################################################################################################################################################
 
 # Base directory for the project
-BASE_DIR = os.environ.get('BASE_DIR', str(Path.cwd() / "ODOO_WORK"))
+BASE_DIR = os.environ.get('BASE_DIR', str(Path.cwd() / "ODOO11_pg14"))
 os.makedirs(BASE_DIR, exist_ok=True)
 VERSIONS = ["11"]
 
 # Function to create directory structure
 def create_directory_structure():
     for version in VERSIONS:
-        os.makedirs(Path(BASE_DIR) / f"odoo{version}" / "addons", exist_ok=True)
-        os.makedirs(Path(BASE_DIR) / f"odoo{version}" / "config", exist_ok=True)
+        os.makedirs(Path(BASE_DIR) / "addons", exist_ok=True)
+        os.makedirs(Path(BASE_DIR) / "config", exist_ok=True)
 
 # Function to create docker-compose.yaml for Odoo 11
 def create_docker_compose_11():
@@ -84,7 +84,7 @@ data_dir = /var/lib/odoo
 def start_containers():
     for version in VERSIONS:
         print(f"[INFO] Starting Odoo {version} containers...")
-        os.chdir(Path(BASE_DIR) / f"odoo{version}")
+        os.chdir(Path(BASE_DIR))
         subprocess.run(["docker-compose", "up", "-d"], check=True)
         print(f"[INFO] Odoo {version} containers started")
 
