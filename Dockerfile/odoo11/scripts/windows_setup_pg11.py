@@ -3,16 +3,16 @@ import subprocess
 import sys
 from pathlib import Path
 
-#######################################################################################################################################
+######################################################################################################################################################
 # Author: Moutaz Muhammad <moutazmuhamad@gmail.com>
 # Support Windows and MAC
 
 # Setup odoo11 & postgresql 11
-# Invoke-RestMethod -Uri https://raw.githubusercontent.com/moutazmuhammad/odoo_docker/main/Dockerfile/scripts/windows_setup.py | python
+# Invoke-RestMethod -Uri https://raw.githubusercontent.com/moutazmuhammad/odoo_docker/main/Dockerfile/odoo11/scripts/windows_setup_pg11.py | python
 
 # To upgrade module for terminal
 # docker exec -u odoo -it odoo11 odoo -u <MODULE_NAME> -d <DB_NAME> -c /etc/odoo/odoo.conf
-########################################################################################################################################
+######################################################################################################################################################
 
 # Base directory for the project
 BASE_DIR = os.environ.get('BASE_DIR', str(Path.cwd() / "ODOO_WORK"))
