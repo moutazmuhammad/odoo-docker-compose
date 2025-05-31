@@ -9,6 +9,11 @@
 
 # To upgrade module for terminal
 # docker exec -u odoo -it odoo11 odoo -u <MODULE_NAME> -d <DB_NAME> -c /etc/odoo/odoo.conf
+
+# Access DB
+# docker exec -it db11 bash
+#  psql -U odoo11 -d <DB_NAME>
+# update res_users set password='admin' where login='admin';
 ##########################################################################################################################################
 
 set -e
