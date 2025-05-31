@@ -2,12 +2,12 @@
 
 ##########################################################################################################################################
 # Author: Moutaz Muhammad <moutazmuhamad@gmail.com>
-# Support Ubuntu 16, 20, 22, 24, CentOS, and Red Hat
+# Supports Ubuntu 16, 20, 22, 24, CentOS, and Red Hat
 
-# Setup odoo11 & posgtresql11
+# Setup odoo11 & postgresql11
 # curl -s https://raw.githubusercontent.com/moutazmuhammad/odoo-docker-compose/main/Dockerfile/odoo11/scripts/linux_setup_pg11.sh | bash
 
-# To upgrade module for terminal
+# To upgrade module from terminal
 # docker exec -u odoo -it odoo11 odoo -u <MODULE_NAME> -d <DB_NAME> -c /etc/odoo/odoo.conf
 
 # Access DB
@@ -20,7 +20,7 @@ set -e
 
 # Base directory for the project
 BASE_DIR="${BASE_DIR:-$PWD/ODOO11_pg11}"
-mkdir -p $BASE_DIR
+mkdir -p "$BASE_DIR"
 VERSIONS=("11")
 
 # Detect OS and version
@@ -44,6 +44,8 @@ check_install_docker() {
             sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
             sudo apt-get update
             sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+            sudo systemctl enable docker
+            sudo systemctl start docker
         elif [ "$OS" == "centos" ] || [ "$OS" == "rhel" ]; then
             if [[ "$VER" == 7.* ]]; then
                 sudo yum remove -y docker docker-common docker-selinux docker-engine
@@ -62,7 +64,6 @@ check_install_docker() {
             exit 1
         fi
 
-        # Allow current user to run Docker without sudo
         sudo groupadd docker 2>/dev/null || true
         sudo usermod -aG docker "$USER"
         sudo chmod 666 /var/run/docker.sock
@@ -84,18 +85,15 @@ check_install_docker_compose() {
     fi
 }
 
-
 # Function to create directory structure
 create_directory_structure() {
-    for version in "${VERSIONS[@]}"; do
-        mkdir -p "$BASE_DIR/addons"
-        mkdir -p "$BASE_DIR/config"
-    done
+    mkdir -p "$BASE_DIR/addons"
+    mkdir -p "$BASE_DIR/config"
 }
 
 # Function to create docker-compose.yaml for Odoo 11
 create_docker_compose_11() {
-    cat > "$BASE_DIR/odoo11/docker-compose.yaml" << 'EOF'
+    cat > "$BASE_DIR/docker-compose.yaml" << 'EOF'
 ---
 services:
   odoo11:
@@ -136,7 +134,7 @@ EOF
 
 # Function to create odoo.conf for Odoo 11
 create_odoo_conf_11() {
-    cat > "$BASE_DIR/odoo11/config/odoo.conf" << 'EOF'
+    cat > "$BASE_DIR/config/odoo.conf" << 'EOF'
 [options]
 admin_passwd = admin11
 db_host = db11
@@ -151,85 +149,45 @@ EOF
 
 # Function to start Docker containers
 start_containers() {
-    for version in "${VERSIONS[@]}"; do
-        echo "[INFO] Starting Odoo ${version} containers..."
-        cd "$BASE_DIR"
-        docker-compose up -d
-        echo "[INFO] Odoo ${version} containers started"
-    done
-}
-
-create_restart_commands() {
-    echo "Creating custom restart commands..."
-
-    # Make sure we have write permission to /usr/local/bin/
-    sudo chmod u+w /usr/local/bin/
-
-    # Create restart-odoo11 command
-    echo '#!/bin/bash' | sudo tee /usr/local/bin/restart-odoo11 > /dev/null
-    echo "cd $BASE_DIR/odoo11 && docker-compose restart" | sudo tee -a /usr/local/bin/restart-odoo11 > /dev/null
-    # Create stop-odoo11 command
-    echo '#!/bin/bash' | sudo tee /usr/local/bin/stop-odoo11 > /dev/null
-    echo "cd $BASE_DIR/odoo11 && docker-compose down" | sudo tee -a /usr/local/bin/stop-odoo11 > /dev/null
-    # Create start-odoo11 command
-    echo '#!/bin/bash' | sudo tee /usr/local/bin/start-odoo11 > /dev/null
-    echo "cd $BASE_DIR/odoo11 && docker-compose up -d" | sudo tee -a /usr/local/bin/start-odoo11 > /dev/null
-    
-    sudo chmod +x /usr/local/bin/*-odoo*
-    
+    echo "[INFO] Starting Odoo containers..."
+    cd "$BASE_DIR"
+    docker-compose up -d
+    echo "[INFO] Odoo containers started"
 }
 
 # Main execution
 echo "[INFO] Setting up Odoo development environment..."
 
-# Check and install prerequisites
 check_install_docker
 check_install_docker_compose
-
-# Create directory structure
 create_directory_structure
-
-# Create configuration files
 create_docker_compose_11
 create_odoo_conf_11
-
-# Start containers
 start_containers
-create_restart_commands
 
-
+# Success banner
 echo -e "\n\033[1;32m+###############################################################################################################################+\033[0m"
 echo -e "\033[1;32m  ✅  Odoo development environment setup complete! Your Odoo development environment is ready for use. Here’s how to get started: \033[0m"
 echo -e "\n\033[1;32m+###############################################################################################################################+\033[0m"
-echo -e "\033[1;32m                                                           \033[0m"
 echo -e "\033[1;34m  🔧 **Working with Odoo:**                                 \033[0m"
 echo -e "\033[1;34m      ➤ You can access Odoo 11 at: \033[1;36m🔗 http://localhost:1169   \033[0m"
-echo -e "\033[1;32m                                                           \033[0m"
 echo -e "\033[1;34m  💡 **How to add custom modules:**                         \033[0m"
-echo -e "\033[1;34m          1. Navigate to the 'addons' directory for the version of Odoo you want to work with: \033[0m"
-echo -e "\033[1;34m             - Odoo 11: $BASE_DIR/odoo11/addons                    \033[0m"
-echo -e "\033[1;34m          2. Place your custom modules inside the respective 'addons' folder. \033[0m"
-echo -e "\033[1;34m          3. **Important:** If your custom modules are not detected by Odoo, you might need to add the path to your 'addons' directory in the corresponding \`odoo.conf\` file. \033[0m"
-echo -e "\033[1;34m             - You can find the \`odoo.conf\` file at:               \033[0m"
-echo -e "\033[1;34m               - Odoo 14: $BASE_DIR/odoo14/config/odoo.conf        \033[0m"
-echo -e "\033[1;34m               - Odoo 11: $BASE_DIR/odoo11/config/odoo.conf        \033[0m"
-echo -e "\033[1;34m          4. Restart Odoo to see the new modules appear by running one of the following commands: \033[0m"
-echo -e "\033[1;34m             - Restart Odoo 14: \033[1;36mrestart-odoo14\033[0m                    \033[0m"
-echo -e "\033[1;34m             - Restart Odoo 11: \033[1;36mrestart-odoo11\033[0m                    \033[0m"
-echo -e "\033[1;32m                                                           \033[0m"
-echo -e "\033[1;34m  💡 **Commands created:**                                  \033[0m"
-echo -e "\033[1;34m       ➤ \033[1;36mstop-odoo11\033[0m                                            \033[0m"
-echo -e "\033[1;34m       ➤ \033[1;36mstart-odoo11\033[0m                                           \033[0m"
-echo -e "\033[1;34m       ➤ \033[1;36mrestart-odoo11\033[0m                                         \033[0m"
-echo -e "\033[1;32m                                                           \033[0m"
-echo -e "\033[1;34m  🚀 **Development Tips:**                                  \033[0m"
-echo -e "\033[1;34m      - Use Docker Compose to manage the environment easily.   \033[0m"
-echo -e "\033[1;34m      - Your changes will take effect after restarting the respective Odoo container. \033[0m"
-echo -e "\033[1;32m                                                           \033[0m"
-echo -e "\033[1;32m  ✅  To view real-time logs for Odoo, run the following commands: \033[0m"
-echo -e "\033[1;32m      - For Odoo 11: \033[1;36mdocker logs -f odoo11\033[0m \033[1;32m \033[0m"
+echo -e "\033[1;34m          1. Navigate to the 'addons' directory:            \033[0m"
+echo -e "\033[1;34m             - Odoo 11: $BASE_DIR/addons                    \033[0m"
+echo -e "\033[1;34m          2. Place your custom modules inside it.           \033[0m"
+echo -e "\033[1;34m          3. Update \`odoo.conf\` if needed:                 \033[0m"
+echo -e "\033[1;34m             - Path: $BASE_DIR/config/odoo.conf             \033[0m"
+echo -e "\033[1;34m          4. Restart Odoo using:                            \033[0m"
+echo -e "\033[1;34m             - \033[1;36mdocker restart odoo11\033[0m                    \033[0m"
+echo -e "\033[1;34m  💡 **Commands:**                                          \033[0m"
+echo -e "\033[1;34m       ➤ \033[1;36mdocker restart odoo11\033[0m                              \033[0m"
+echo -e "\033[1;34m       ➤ \033[1;36mdocker start odoo11\033[0m                                \033[0m"
+echo -e "\033[1;34m       ➤ \033[1;36mdocker stop odoo11\033[0m                                 \033[0m"
+echo -e "\033[1;34m  🚀 **Tips:**                                              \033[0m"
+echo -e "\033[1;34m      - Use Docker Compose to manage the environment.       \033[0m"
+echo -e "\033[1;34m      - Restart the container after code/config changes.    \033[0m"
+echo -e "\033[1;34m      - View real-time logs using: \033[1;36mdocker logs -f odoo11\033[0m     \033[0m"
 echo -e "\033[1;32m                                                           \033[0m"
 echo -e "\033[1;32m  Best regards,                                             \033[0m"
 echo -e "\033[1;32m  Moutaz Muhammad                                           \033[0m"
 echo -e "\n\033[1;32m+###############################################################################################################################+\033[0m"
-
