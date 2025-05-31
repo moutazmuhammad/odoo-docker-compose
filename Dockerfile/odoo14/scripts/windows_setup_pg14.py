@@ -19,8 +19,8 @@ VERSIONS = ["14"]
 # Function to create directory structure
 def create_directory_structure():
     for version in VERSIONS:
-        os.makedirs(Path(BASE_DIR) / f"odoo{version}" / "addons", exist_ok=True)
-        os.makedirs(Path(BASE_DIR) / f"odoo{version}" / "config", exist_ok=True)
+        os.makedirs(Path(BASE_DIR) / "addons", exist_ok=True)
+        os.makedirs(Path(BASE_DIR) / "config", exist_ok=True)
 
 # Function to create docker-compose.yaml for Odoo 14
 def create_docker_compose_14():
@@ -82,7 +82,7 @@ data_dir = /var/lib/odoo
 def start_containers():
     for version in VERSIONS:
         print(f"[INFO] Starting Odoo {version} containers...")
-        os.chdir(Path(BASE_DIR) / f"odoo{version}")
+        os.chdir(Path(BASE_DIR))
         subprocess.run(["docker-compose", "up", "-d"], check=True)
         print(f"[INFO] Odoo {version} containers started")
 
